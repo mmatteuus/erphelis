@@ -1,15 +1,16 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useMemo, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   Bell,
   Calendar,
   ChevronDown,
   Command,
-  Flower2,
   Menu,
   PanelLeft,
   Plus,
   Search,
+  Sparkles,
+  UserRound,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -30,45 +31,67 @@ import {
 } from "@/components/ui/sheet";
 import { CommandPalette } from "./CommandPalette";
 import { ERPMobileNav } from "./ERPMobileNav";
-import { usePreferencesStore } from "@/store/preferences";
+import { usePreferencesStore, type UserRole } from "@/store/preferences";
+
+const roleLabels: Record<UserRole, string> = {
+  admin: "Admin",
+  gerente: "Gerente",
+  vendedor: "Vendedor",
+  estoquista: "Estoquista",
+};
+
+const notifications = [
+  {
+    id: 1,
+    title: "NF-e pronta para envio",
+    desc: "Pedido #JM-1042 aguardando assinatura",
+    type: "info" as const,
+  },
+  {
+    id: 2,
+    title: "Estoque crítico",
+    desc: "SKU AÇ-021 abaixo do mínimo",
+    type: "warning" as const,
+  },
+  {
+    id: 3,
+    title: "Aprovação pendente",
+    desc: "3 pedidos aguardando gerente",
+    type: "danger" as const,
+  },
+];
 
 export function ERPTopbar() {
   const [showCommand, setShowCommand] = useState(false);
   const [period, setPeriod] = useState("Hoje");
-  const { sidebarCollapsed, toggleSidebarCollapsed } = usePreferencesStore();
+  const { sidebarCollapsed, toggleSidebarCollapsed, currentRole, setCurrentRole } =
+    usePreferencesStore();
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  const notifications = [
-    {
-      id: 1,
-      title: "Estoque crítico",
-      desc: "Rosas vermelhas abaixo do mínimo",
-      type: "warning" as const,
-    },
-    {
-      id: 2,
-      title: "Pedido pendente",
-      desc: "3 pedidos aguardando aprovação",
-      type: "info" as const,
-    },
-    {
-      id: 3,
-      title: "Entrega atrasada",
-      desc: "Pedido VB-2024-003 em atraso",
-      type: "danger" as const,
-    },
-  ];
+  useEffect(() => {
+    const [, segment] = location.pathname.split("/");
+    if (segment && roleLabels[segment as UserRole]) {
+      setCurrentRole(segment as UserRole);
+    }
+  }, [location.pathname, setCurrentRole]);
+
+  const roleOptions = useMemo(
+    () => (["admin", "gerente", "vendedor", "estoquista"] as UserRole[]),
+    [],
+  );
 
   return (
     <>
       <header className="sticky top-0 z-40 h-16 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="flex h-full items-center gap-4 px-4 lg:px-6">
+        <div className="flex h-full items-center gap-3 px-4 lg:px-6">
           <Button
             type="button"
             variant="ghost"
             size="icon"
             className="hidden lg:inline-flex"
             onClick={toggleSidebarCollapsed}
-            aria-label={sidebarCollapsed ? "Abrir sidebar" : "Fechar sidebar"}
+            aria-label={sidebarCollapsed ? "Abrir navegação" : "Fechar navegação"}
           >
             <PanelLeft className="h-5 w-5" />
           </Button>
@@ -79,15 +102,15 @@ export function ERPTopbar() {
                 <Menu className="h-5 w-5" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="w-72 p-0">
+            <SheetContent side="left" className="w-80 p-0">
               <SheetHeader className="h-16 flex flex-row items-center gap-3 px-6 border-b">
-                <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center">
-                  <Flower2 className="w-5 h-5 text-primary-foreground" />
+                <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center">
+                  <Sparkles className="w-5 h-5 text-primary-foreground" />
                 </div>
                 <SheetTitle className="text-left">
-                  <span className="font-semibold">Vila Bella</span>
+                  <span className="font-semibold">ERP João e Maria</span>
                   <span className="block text-xs text-muted-foreground font-normal">
-                    ERP Floricultura
+                    Troque de papel e navegue pelos módulos
                   </span>
                 </SheetTitle>
               </SheetHeader>
@@ -95,11 +118,11 @@ export function ERPTopbar() {
             </SheetContent>
           </Sheet>
 
-          <div className="hidden md:flex flex-1 max-w-md">
+          <div className="hidden md:flex flex-1 max-w-xl">
             <div className="relative w-full">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="Buscar pedidos, clientes, produtos… (Ctrl+K)"
+                placeholder="Buscar pedidos, clientes ou NF-e (Ctrl+K)"
                 className="pl-9 pr-12 bg-muted/50 border-0 focus-visible:ring-1"
                 onClick={() => setShowCommand(true)}
                 readOnly
@@ -112,29 +135,41 @@ export function ERPTopbar() {
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button
-                variant="outline"
-                size="sm"
-                className="hidden sm:flex gap-2"
-              >
+              <Button variant="outline" size="sm" className="hidden sm:flex gap-2">
                 <Calendar className="h-4 w-4" />
                 {period}
                 <ChevronDown className="h-3 w-3 opacity-50" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => setPeriod("Hoje")}>
-                Hoje
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setPeriod("7 dias")}>
-                Últimos 7 dias
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setPeriod("30 dias")}>
-                Últimos 30 dias
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setPeriod("Este mês")}>
-                Este mês
-              </DropdownMenuItem>
+              {["Hoje", "7 dias", "30 dias", "Este mês"].map((p) => (
+                <DropdownMenuItem key={p} onClick={() => setPeriod(p)}>
+                  {p}
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" size="sm" className="hidden sm:flex gap-2">
+                <Sparkles className="h-4 w-4 text-accent" />
+                {roleLabels[currentRole]}
+                <ChevronDown className="h-3 w-3 opacity-50" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              {roleOptions.map((role) => (
+                <DropdownMenuItem
+                  key={role}
+                  onClick={() => {
+                    setCurrentRole(role);
+                    navigate(`/${role}`);
+                  }}
+                >
+                  {roleLabels[role]}
+                </DropdownMenuItem>
+              ))}
             </DropdownMenuContent>
           </DropdownMenu>
 
@@ -199,29 +234,18 @@ export function ERPTopbar() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon" className="rounded-full">
-                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                  <span className="text-sm font-medium text-primary">A</span>
+                <div className="w-9 h-9 rounded-full bg-primary/15 flex items-center justify-center">
+                  <UserRound className="h-5 w-5 text-primary" />
                 </div>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
+            <DropdownMenuContent align="end" className="w-48">
               <DropdownMenuItem>Perfil</DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <Link to="/configuracoes">Configurações</Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem asChild>
-                <a
-                  href="https://mtsferreira.dev"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Desenvolvido por MtsFerreira
-                </a>
-              </DropdownMenuItem>
-              <DropdownMenuItem className="text-destructive">
-                Sair
-              </DropdownMenuItem>
+              <DropdownMenuItem className="text-destructive">Sair</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

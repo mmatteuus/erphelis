@@ -15,13 +15,13 @@ export const stockBalances: Array<{
   {
     productId: "p_orquidea",
     sku: "FLR-ORQ-PHAL",
-    produto: "Orquídea Phalaenopsis",
+    produto: "Orquídea phalaenopsis",
     saldo: 5,
   },
   {
     productId: "p_cesta_cafe",
     sku: "CST-CAF-001",
-    produto: "Cesta Café da Manhã",
+    produto: "Cesta café da manhã",
     saldo: 3,
   },
   {
@@ -62,7 +62,7 @@ export const movements: StockMovement[] = [
     sku: "FLR-ROSA-VERM",
     produto: "Rosa vermelha (un.)",
     quantidade: 24,
-    motivo: "Pedido VB-2025-001",
+    motivo: "Pedido JM-2025-001",
     criadoEm: "2025-12-19T12:30:00.000Z",
   },
   {

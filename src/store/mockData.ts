@@ -1,4 +1,4 @@
-// Vila Bella ERP - Mock Data Store
+// ERP Joao e Maria - Mock Data Store
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
@@ -181,11 +181,11 @@ const mockVendors: Vendor[] = [
 ];
 
 const mockSalesOrders: SalesOrder[] = [
-  { id: '1', orderNumber: 'VB-2024-001', customerId: '1', customerName: 'Maria Silva', items: [{ productId: '1', productName: 'Buquê de Rosas Vermelhas', quantity: 1, price: 149.90 }, { productId: '8', productName: 'Balão Metalizado Coração', quantity: 2, price: 29.90 }], total: 209.70, status: 'delivered', deliveryDate: '2024-12-15', deliveryWindow: 'morning', deliveryAddress: 'Rua das Flores, 123', cardMessage: 'Com amor, sempre.', paymentStatus: 'paid', createdAt: '2024-12-14T10:00:00', updatedAt: '2024-12-15T11:30:00' },
-  { id: '2', orderNumber: 'VB-2024-002', customerId: '2', customerName: 'João Santos', items: [{ productId: '4', productName: 'Cesta Café da Manhã Especial', quantity: 1, price: 259.90 }], total: 259.90, status: 'in_route', deliveryDate: '2024-12-19', deliveryWindow: 'morning', deliveryAddress: 'Av. Brasil, 456', paymentStatus: 'paid', createdAt: '2024-12-18T09:00:00', updatedAt: '2024-12-19T07:00:00' },
-  { id: '3', orderNumber: 'VB-2024-003', customerId: '3', customerName: 'Ana Costa', items: [{ productId: '3', productName: 'Orquídea Phalaenopsis', quantity: 1, price: 129.90 }, { productId: '6', productName: 'Kit Chocolate Premium', quantity: 1, price: 89.90 }], total: 219.80, status: 'production', deliveryDate: '2024-12-20', deliveryWindow: 'afternoon', deliveryAddress: 'Rua Augusta, 789', cardMessage: 'Feliz aniversário!', paymentStatus: 'paid', createdAt: '2024-12-18T14:00:00', updatedAt: '2024-12-18T16:00:00' },
-  { id: '4', orderNumber: 'VB-2024-004', customerId: '4', customerName: 'Carlos Oliveira', items: [{ productId: '2', productName: 'Arranjo Tropical', quantity: 5, price: 189.90 }], total: 949.50, status: 'new', deliveryDate: '2024-12-21', deliveryWindow: 'morning', deliveryAddress: 'Av. Paulista, 1000', paymentStatus: 'pending', createdAt: '2024-12-19T08:00:00', updatedAt: '2024-12-19T08:00:00' },
-  { id: '5', orderNumber: 'VB-2024-005', customerId: '5', customerName: 'Fernanda Lima', items: [{ productId: '5', productName: 'Cesta Romântica', quantity: 1, price: 349.90 }, { productId: '7', productName: 'Pelúcia Urso Grande', quantity: 1, price: 79.90 }], total: 429.80, status: 'ready', deliveryDate: '2024-12-19', deliveryWindow: 'evening', deliveryAddress: 'Rua Oscar Freire, 200', cardMessage: 'Te amo!', paymentStatus: 'paid', createdAt: '2024-12-18T16:00:00', updatedAt: '2024-12-19T14:00:00' },
+  { id: '1', orderNumber: 'JM-2024-001', customerId: '1', customerName: 'Maria Silva', items: [{ productId: '1', productName: 'Buquê de Rosas Vermelhas', quantity: 1, price: 149.90 }, { productId: '8', productName: 'Balão Metalizado Coração', quantity: 2, price: 29.90 }], total: 209.70, status: 'delivered', deliveryDate: '2024-12-15', deliveryWindow: 'morning', deliveryAddress: 'Rua das Flores, 123', cardMessage: 'Com amor, sempre.', paymentStatus: 'paid', createdAt: '2024-12-14T10:00:00', updatedAt: '2024-12-15T11:30:00' },
+  { id: '2', orderNumber: 'JM-2024-002', customerId: '2', customerName: 'João Santos', items: [{ productId: '4', productName: 'Cesta Café da Manhã Especial', quantity: 1, price: 259.90 }], total: 259.90, status: 'in_route', deliveryDate: '2024-12-19', deliveryWindow: 'morning', deliveryAddress: 'Av. Brasil, 456', paymentStatus: 'paid', createdAt: '2024-12-18T09:00:00', updatedAt: '2024-12-19T07:00:00' },
+  { id: '3', orderNumber: 'JM-2024-003', customerId: '3', customerName: 'Ana Costa', items: [{ productId: '3', productName: 'Orquídea Phalaenopsis', quantity: 1, price: 129.90 }, { productId: '6', productName: 'Kit Chocolate Premium', quantity: 1, price: 89.90 }], total: 219.80, status: 'production', deliveryDate: '2024-12-20', deliveryWindow: 'afternoon', deliveryAddress: 'Rua Augusta, 789', cardMessage: 'Feliz aniversário!', paymentStatus: 'paid', createdAt: '2024-12-18T14:00:00', updatedAt: '2024-12-18T16:00:00' },
+  { id: '4', orderNumber: 'JM-2024-004', customerId: '4', customerName: 'Carlos Oliveira', items: [{ productId: '2', productName: 'Arranjo Tropical', quantity: 5, price: 189.90 }], total: 949.50, status: 'new', deliveryDate: '2024-12-21', deliveryWindow: 'morning', deliveryAddress: 'Av. Paulista, 1000', paymentStatus: 'pending', createdAt: '2024-12-19T08:00:00', updatedAt: '2024-12-19T08:00:00' },
+  { id: '5', orderNumber: 'JM-2024-005', customerId: '5', customerName: 'Fernanda Lima', items: [{ productId: '5', productName: 'Cesta Romântica', quantity: 1, price: 349.90 }, { productId: '7', productName: 'Pelúcia Urso Grande', quantity: 1, price: 79.90 }], total: 429.80, status: 'ready', deliveryDate: '2024-12-19', deliveryWindow: 'evening', deliveryAddress: 'Rua Oscar Freire, 200', cardMessage: 'Te amo!', paymentStatus: 'paid', createdAt: '2024-12-18T16:00:00', updatedAt: '2024-12-19T14:00:00' },
 ];
 
 const mockInventoryItems: InventoryItem[] = [
@@ -232,7 +232,7 @@ const mockInvoices: Invoice[] = [
 
 const generateAuditLogs = (): AuditLog[] => {
   const actions = [
-    { action: 'Criou pedido', module: 'Vendas', details: 'Pedido VB-2024-001 criado' },
+    { action: 'Criou pedido', module: 'Vendas', details: 'Pedido JM-2024-001 criado' },
     { action: 'Atualizou estoque', module: 'Estoque', details: 'Entrada de 120 rosas vermelhas' },
     { action: 'Aprovou compra', module: 'Compras', details: 'PC-2024-001 aprovado' },
     { action: 'Concluiu produção', module: 'Produção', details: 'OP-2024-001 finalizada' },
@@ -318,7 +318,7 @@ export const useERPStore = create<ERPStore>()(
         const newOrder: SalesOrder = {
           ...order,
           id: generateId(),
-          orderNumber: `VB-2024-${String(orderCount).padStart(3, '0')}`,
+          orderNumber: `JM-2024-${String(orderCount).padStart(3, '0')}`,
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
         };

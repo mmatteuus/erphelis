@@ -31,7 +31,7 @@ type DbState = {
   invoices: Invoice[];
 };
 
-const STORAGE_KEY = "erpvilabella-db-v1";
+const STORAGE_KEY = "erp-joaoemaria-db-v1";
 
 function nowIso() {
   return new Date().toISOString();
@@ -83,7 +83,7 @@ function randomId(prefix: string) {
 
 function nextOrderNumber(orders: Order[]) {
   const next = orders.length + 1;
-  return `VB-2025-${String(next).padStart(3, "0")}`;
+  return `JM-2025-${String(next).padStart(3, "0")}`;
 }
 
 export const fakeDb = {

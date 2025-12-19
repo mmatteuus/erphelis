@@ -1,6 +1,6 @@
-# Vila Bella ERP
+# ERP João e Maria
 
-ERP para floriculturas, com foco em vendas, estoque, compras, produção e financeiro.
+Frontend do ERP João e Maria com painéis por papel (admin, gerente, vendedor, estoquista) e módulos de vendas, estoque e financeiro.
 
 ## Requisitos
 

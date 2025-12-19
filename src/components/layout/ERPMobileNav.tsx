@@ -1,14 +1,5 @@
-import { Link, useLocation } from "react-router-dom";
-import {
-  BarChart3,
-  ChevronDown,
-  DollarSign,
-  LayoutDashboard,
-  Settings,
-  ShoppingCart,
-  Users,
-  Warehouse,
-} from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { ChevronDown, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
   Collapsible,
@@ -17,52 +8,14 @@ import {
 } from "@/components/ui/collapsible";
 import { useState } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
-
-interface NavItem {
-  title: string;
-  href?: string;
-  icon: React.ElementType;
-  children?: { title: string; href: string }[];
-}
-
-const navItems: NavItem[] = [
-  { title: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  {
-    title: "Vendas",
-    icon: ShoppingCart,
-    children: [{ title: "Pedidos", href: "/vendas/pedidos" }],
-  },
-  {
-    title: "Estoque",
-    icon: Warehouse,
-    children: [
-      { title: "Produtos", href: "/estoque/produtos" },
-      { title: "Movimentações", href: "/estoque/movimentacoes" },
-    ],
-  },
-  {
-    title: "Cadastros",
-    icon: Users,
-    children: [
-      { title: "Clientes", href: "/clientes" },
-      { title: "Fornecedores", href: "/fornecedores" },
-    ],
-  },
-  {
-    title: "Financeiro",
-    icon: DollarSign,
-    children: [
-      { title: "Contas a receber", href: "/financeiro/contas-a-receber" },
-      { title: "Contas a pagar", href: "/financeiro/contas-a-pagar" },
-    ],
-  },
-  { title: "Relatórios", href: "/relatorios", icon: BarChart3 },
-  { title: "Configurações", href: "/configuracoes", icon: Settings },
-];
+import { navItems } from "./navConfig";
+import { usePreferencesStore, type UserRole } from "@/store/preferences";
 
 export function ERPMobileNav() {
   const location = useLocation();
-  const [openItems, setOpenItems] = useState<string[]>([]);
+  const navigate = useNavigate();
+  const { currentRole, setCurrentRole } = usePreferencesStore();
+  const [openItems, setOpenItems] = useState<string[]>(["Painéis", "Vendas"]);
 
   const toggleItem = (title: string) => {
     setOpenItems((prev) =>
@@ -72,9 +25,41 @@ export function ERPMobileNav() {
 
   const isActive = (href: string) => location.pathname === href;
 
+  const handleRoleClick = (role: UserRole) => {
+    setCurrentRole(role);
+    navigate(`/${role}`);
+  };
+
   return (
     <ScrollArea className="h-[calc(100vh-4rem)]">
-      <nav className="py-4 px-3">
+      <div className="p-4 border-b flex items-center gap-3">
+        <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-primary-foreground">
+          <Sparkles className="w-5 h-5" />
+        </div>
+        <div>
+          <p className="text-xs uppercase tracking-[0.08em] text-muted-foreground">João e Maria</p>
+          <p className="text-sm font-semibold">Escolha o painel por papel</p>
+        </div>
+      </div>
+
+      <div className="px-4 py-3 flex flex-wrap gap-2">
+        {(["admin", "gerente", "vendedor", "estoquista"] as UserRole[]).map((role) => (
+          <button
+            key={role}
+            onClick={() => handleRoleClick(role)}
+            className={cn(
+              "px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors",
+              currentRole === role
+                ? "bg-primary text-primary-foreground"
+                : "bg-muted text-foreground hover:bg-primary/40",
+            )}
+          >
+            {role.charAt(0).toUpperCase() + role.slice(1)}
+          </button>
+        ))}
+      </div>
+
+      <nav className="py-3 px-3">
         <ul className="space-y-1">
           {navItems.map((item) => (
             <li key={item.title}>
@@ -83,7 +68,7 @@ export function ERPMobileNav() {
                   open={openItems.includes(item.title)}
                   onOpenChange={() => toggleItem(item.title)}
                 >
-                  <CollapsibleTrigger className="w-full flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium text-foreground hover:bg-muted/50">
+                  <CollapsibleTrigger className="w-full flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-semibold text-foreground hover:bg-muted/50">
                     <item.icon className="w-5 h-5" />
                     <span className="flex-1 text-left">{item.title}</span>
                     <ChevronDown
@@ -98,10 +83,16 @@ export function ERPMobileNav() {
                       <Link
                         key={child.href}
                         to={child.href}
+                        onClick={() => {
+                          const [, segment] = child.href.split("/");
+                          if (segment && ["admin", "gerente", "vendedor", "estoquista"].includes(segment)) {
+                            setCurrentRole(segment as UserRole);
+                          }
+                        }}
                         className={cn(
                           "block px-3 py-2.5 rounded-md text-sm transition-colors",
                           isActive(child.href)
-                            ? "bg-primary text-primary-foreground font-medium"
+                            ? "bg-primary text-primary-foreground font-semibold"
                             : "text-muted-foreground hover:text-foreground hover:bg-muted/50",
                         )}
                       >
@@ -114,7 +105,7 @@ export function ERPMobileNav() {
                 <Link
                   to={item.href!}
                   className={cn(
-                    "flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-colors",
+                    "flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-semibold transition-colors",
                     isActive(item.href!)
                       ? "bg-primary text-primary-foreground"
                       : "text-foreground hover:bg-muted/50",

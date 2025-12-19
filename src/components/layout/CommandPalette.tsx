@@ -48,14 +48,12 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
 
   return (
     <CommandDialog open={open} onOpenChange={onOpenChange}>
-      <CommandInput placeholder="Digite um comando ou busque…" />
+      <CommandInput placeholder="Digite um comando ou busque" />
       <CommandList>
         <CommandEmpty>Nenhum resultado encontrado.</CommandEmpty>
 
         <CommandGroup heading="Ações rápidas">
-          <CommandItem
-            onSelect={() => runCommand(() => navigate("/vendas/pedidos/novo"))}
-          >
+          <CommandItem onSelect={() => runCommand(() => navigate("/vendas/pedidos/novo"))}>
             <Plus className="mr-2 h-4 w-4" />
             <span>Novo pedido</span>
           </CommandItem>
@@ -69,11 +67,30 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
             <Users className="mr-2 h-4 w-4" />
             <span>Buscar cliente</span>
           </CommandItem>
-          <CommandItem
-            onSelect={() => runCommand(() => navigate("/estoque/produtos"))}
-          >
+          <CommandItem onSelect={() => runCommand(() => navigate("/estoque/produtos"))}>
             <Search className="mr-2 h-4 w-4" />
             <span>Consultar produtos</span>
+          </CommandItem>
+        </CommandGroup>
+
+        <CommandSeparator />
+
+        <CommandGroup heading="Painéis por papel">
+          <CommandItem onSelect={() => runCommand(() => navigate("/admin"))}>
+            <LayoutDashboard className="mr-2 h-4 w-4" />
+            <span>Admin</span>
+          </CommandItem>
+          <CommandItem onSelect={() => runCommand(() => navigate("/gerente"))}>
+            <LayoutDashboard className="mr-2 h-4 w-4" />
+            <span>Gerente</span>
+          </CommandItem>
+          <CommandItem onSelect={() => runCommand(() => navigate("/vendedor"))}>
+            <LayoutDashboard className="mr-2 h-4 w-4" />
+            <span>Vendedor</span>
+          </CommandItem>
+          <CommandItem onSelect={() => runCommand(() => navigate("/estoquista"))}>
+            <LayoutDashboard className="mr-2 h-4 w-4" />
+            <span>Estoquista</span>
           </CommandItem>
         </CommandGroup>
 
@@ -82,11 +99,9 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
         <CommandGroup heading="Navegação">
           <CommandItem onSelect={() => runCommand(() => navigate("/dashboard"))}>
             <LayoutDashboard className="mr-2 h-4 w-4" />
-            <span>Dashboard</span>
+            <span>Dashboard unificado</span>
           </CommandItem>
-          <CommandItem
-            onSelect={() => runCommand(() => navigate("/vendas/pedidos"))}
-          >
+          <CommandItem onSelect={() => runCommand(() => navigate("/vendas/pedidos"))}>
             <ShoppingCart className="mr-2 h-4 w-4" />
             <span>Pedidos</span>
           </CommandItem>
@@ -97,16 +112,12 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
             <span>Movimentações</span>
           </CommandItem>
           <CommandItem
-            onSelect={() =>
-              runCommand(() => navigate("/financeiro/contas-a-receber"))
-            }
+            onSelect={() => runCommand(() => navigate("/financeiro/contas-a-receber"))}
           >
             <DollarSign className="mr-2 h-4 w-4" />
             <span>Contas a receber</span>
           </CommandItem>
-          <CommandItem
-            onSelect={() => runCommand(() => navigate("/relatorios"))}
-          >
+          <CommandItem onSelect={() => runCommand(() => navigate("/relatorios"))}>
             <FileText className="mr-2 h-4 w-4" />
             <span>Relatórios</span>
           </CommandItem>
@@ -115,4 +126,3 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
     </CommandDialog>
   );
 }
-

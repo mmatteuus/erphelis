@@ -16,7 +16,7 @@ export const products: Product[] = [
   {
     id: "p_orquidea",
     sku: "FLR-ORQ-PHAL",
-    nome: "Orquídea Phalaenopsis",
+    nome: "Orquídea phalaenopsis",
     tipo: "flor",
     categoria: "Plantas",
     preco: 159.9,
@@ -28,7 +28,7 @@ export const products: Product[] = [
   {
     id: "p_cesta_cafe",
     sku: "CST-CAF-001",
-    nome: "Cesta Café da Manhã",
+    nome: "Cesta café da manhã",
     tipo: "cesta",
     categoria: "Cestas",
     preco: 259.9,
@@ -74,4 +74,3 @@ export const products: Product[] = [
     criadoEm: "2025-02-10T10:00:00.000Z",
   },
 ];
-

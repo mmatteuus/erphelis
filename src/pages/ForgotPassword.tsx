@@ -9,6 +9,9 @@ export default function ForgotPassword() {
       <Card className="w-full max-w-md shadow-lg">
         <CardHeader>
           <CardTitle>Recuperar senha</CardTitle>
+          <p className="text-sm text-muted-foreground">
+            Enviaremos um link para o e-mail cadastrado no ERP João e Maria.
+          </p>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">

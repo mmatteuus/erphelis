@@ -3,7 +3,7 @@ import type { Order } from "./types";
 export const orders: Order[] = [
   {
     id: "o_001",
-    numero: "VB-2025-001",
+    numero: "JM-2025-001",
     customerId: "c_maria_silva",
     cliente: "Maria Silva",
     status: "em_rota",
@@ -11,7 +11,7 @@ export const orders: Order[] = [
       {
         productId: "p_buque_12_rosas",
         sku: "FLR-BUQ-012",
-        nome: "Buquê 12 rosas vermelhas",
+        nome: "Buquê 12 rosas",
         quantidade: 1,
         precoUnitario: 189.9,
       },
@@ -29,7 +29,7 @@ export const orders: Order[] = [
   },
   {
     id: "o_002",
-    numero: "VB-2025-002",
+    numero: "JM-2025-002",
     customerId: "c_joao_santos",
     cliente: "João Santos",
     status: "novo",
@@ -37,7 +37,7 @@ export const orders: Order[] = [
       {
         productId: "p_orquidea",
         sku: "FLR-ORQ-PHAL",
-        nome: "Orquídea Phalaenopsis",
+        nome: "Orquídea phalaenopsis",
         quantidade: 1,
         precoUnitario: 159.9,
       },
@@ -48,7 +48,7 @@ export const orders: Order[] = [
   },
   {
     id: "o_003",
-    numero: "VB-2025-003",
+    numero: "JM-2025-003",
     customerId: "c_empresa_alfa",
     cliente: "Empresa Alfa LTDA",
     status: "entregue",
@@ -56,7 +56,7 @@ export const orders: Order[] = [
       {
         productId: "p_cesta_cafe",
         sku: "CST-CAF-001",
-        nome: "Cesta Café da Manhã",
+        nome: "Cesta café da manhã",
         quantidade: 2,
         precoUnitario: 259.9,
       },
@@ -66,4 +66,3 @@ export const orders: Order[] = [
     entregaEm: "2025-12-18T00:00:00.000Z",
   },
 ];
-

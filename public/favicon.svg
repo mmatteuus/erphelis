@@ -1,14 +1,20 @@
-﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
-  <rect width="128" height="128" rx="24" fill="#ffffff"/>
-  <text
-    x="50%"
-    y="50%"
-    dominant-baseline="central"
-    text-anchor="middle"
-    font-family="'Inter', 'Segoe UI Emoji', 'Apple Color Emoji', sans-serif"
-    font-size="74"
-    fill="#d32f2f"
-  >
-    💐
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="ERP João e Maria">
+  <defs>
+    <linearGradient id="bg" x1="18%" y1="10%" x2="88%" y2="86%">
+      <stop offset="0%" stop-color="#A6D5D0"/>
+      <stop offset="100%" stop-color="#F8DCE2"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="20%" y1="0%" x2="100%" y2="80%">
+      <stop offset="0%" stop-color="#6C63FF" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#6C63FF" stop-opacity="0.08"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="url(#bg)"/>
+  <rect x="10" y="10" width="108" height="108" rx="24" fill="url(#glow)"/>
+  <circle cx="40" cy="42" r="10" fill="#6C63FF" opacity="0.9"/>
+  <circle cx="88" cy="84" r="8" fill="#FFB3C8" opacity="0.85"/>
+  <path d="M34 86c12-6 22-16 26-32 2-8 2-18 10-26 8-8 20-10 28-4" fill="none" stroke="#1F1F1F" stroke-width="4" stroke-linecap="round" stroke-opacity="0.12"/>
+  <text x="50%" y="57%" text-anchor="middle" font-family="'Manrope','Inter','Segoe UI',sans-serif" font-size="46" font-weight="700" fill="#1F2A2A" letter-spacing="1">
+    JM
   </text>
 </svg>

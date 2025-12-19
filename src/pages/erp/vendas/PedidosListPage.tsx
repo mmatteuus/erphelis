@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { DataTable } from "@/components/data/DataTable";
 import { DataTableColumnHeader } from "@/components/data/DataTableColumnHeader";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -9,7 +11,16 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Badge } from "@/components/ui/badge";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { formatCurrencyBRL, formatDateBR } from "@/lib/format";
 import type { Order, OrderStatus } from "@/mock";
 import { api } from "@/services/api";
@@ -41,6 +52,7 @@ const statusBadge: Record<OrderStatus, string> = {
 
 export default function PedidosListPage() {
   const queryClient = useQueryClient();
+  const [orderToCancel, setOrderToCancel] = useState<Order | null>(null);
 
   const ordersQuery = useQuery({
     queryKey: ["orders"],
@@ -61,23 +73,17 @@ export default function PedidosListPage() {
   const columns: ColumnDef<Order>[] = [
     {
       accessorKey: "numero",
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Pedido" />
-      ),
-      meta: { label: "Pedido", filterVariant: "text", placeholder: "VB-2025-" },
+      header: ({ column }) => <DataTableColumnHeader column={column} title="Pedido" />,
+      meta: { label: "Pedido", filterVariant: "text", placeholder: "JM-2025-" },
     },
     {
       accessorKey: "cliente",
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Cliente" />
-      ),
+      header: ({ column }) => <DataTableColumnHeader column={column} title="Cliente" />,
       meta: { label: "Cliente", filterVariant: "text" },
     },
     {
       accessorKey: "status",
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Status" />
-      ),
+      header: ({ column }) => <DataTableColumnHeader column={column} title="Status" />,
       meta: {
         label: "Status",
         filterVariant: "select",
@@ -103,16 +109,12 @@ export default function PedidosListPage() {
     },
     {
       accessorKey: "entregaEm",
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Entrega" />
-      ),
+      header: ({ column }) => <DataTableColumnHeader column={column} title="Entrega" />,
       cell: ({ getValue }) => formatDateBR(getValue() as string),
     },
     {
       accessorKey: "total",
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Total" />
-      ),
+      header: ({ column }) => <DataTableColumnHeader column={column} title="Total" />,
       cell: ({ getValue }) => formatCurrencyBRL(getValue() as number),
     },
     {
@@ -142,23 +144,17 @@ export default function PedidosListPage() {
               <DropdownMenuSeparator />
               <DropdownMenuLabel>Mudar status</DropdownMenuLabel>
               {(
-                [
-                  "novo",
-                  "separacao",
-                  "producao",
-                  "pronto",
-                  "em_rota",
-                  "entregue",
-                  "cancelado",
-                ] as OrderStatus[]
+                ["novo", "separacao", "producao", "pronto", "em_rota", "entregue", "cancelado"] as OrderStatus[]
               ).map((s) => (
                 <DropdownMenuItem
                   key={s}
                   onClick={() => {
+                    if (s === "cancelado") {
+                      setOrderToCancel(order);
+                      return;
+                    }
                     updateStatusMutation.mutate({ id: order.id, status: s });
-                    toast("Status atualizado", {
-                      description: `${order.numero} → ${statusLabel[s]}`,
-                    });
+                    toast("Status atualizado", { description: `${order.numero} -> ${statusLabel[s]}` });
                   }}
                 >
                   {statusLabel[s]}
@@ -190,16 +186,14 @@ export default function PedidosListPage() {
         data={ordersQuery.data ?? []}
         loading={ordersQuery.isLoading}
         columns={columns}
-        globalFilterPlaceholder="Buscar por número, cliente…"
+        globalFilterPlaceholder="Buscar por número, cliente ou valor"
         getRowId={(row) => row.id}
         mobileCard={(o) => (
           <div className="space-y-2">
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0">
                 <div className="font-medium truncate">{o.numero}</div>
-                <div className="text-xs text-muted-foreground truncate">
-                  {o.cliente}
-                </div>
+                <div className="text-xs text-muted-foreground truncate">{o.cliente}</div>
               </div>
               <div className="text-sm font-semibold whitespace-nowrap">
                 {formatCurrencyBRL(o.total)}
@@ -214,6 +208,37 @@ export default function PedidosListPage() {
           </div>
         )}
       />
+
+      <AlertDialog
+        open={!!orderToCancel}
+        onOpenChange={(open) => {
+          if (!open) setOrderToCancel(null);
+        }}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Cancelar pedido?</AlertDialogTitle>
+            <AlertDialogDescription>
+              {orderToCancel
+                ? `Confirme o cancelamento do pedido ${orderToCancel.numero}. Essa ação notificará o time de estoque e finanças.`
+                : "Selecione um pedido para continuar."}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => setOrderToCancel(null)}>Voltar</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => {
+                if (!orderToCancel) return;
+                updateStatusMutation.mutate({ id: orderToCancel.id, status: "cancelado" });
+                toast("Pedido cancelado", { description: `${orderToCancel.numero} -> Cancelado` });
+                setOrderToCancel(null);
+              }}
+            >
+              Confirmar
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

@@ -53,8 +53,7 @@ export default function DashboardPage() {
 
   const entregasHoje = orders.filter((o) => isSameDay(new Date(o.entregaEm), now)).length;
 
-  const ticketMedio =
-    deliveredMonth.length > 0 ? faturamentoMes / deliveredMonth.length : 0;
+  const ticketMedio = deliveredMonth.length > 0 ? faturamentoMes / deliveredMonth.length : 0;
 
   const lowStock = balances.filter((b) => {
     const product = products.find((p) => p.id === b.productId);
@@ -77,8 +76,8 @@ export default function DashboardPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight">Dashboard</h1>
-        <p className="text-muted-foreground">KPIs para demo/venda</p>
+        <h1 className="text-2xl font-bold tracking-tight">Visão geral</h1>
+        <p className="text-muted-foreground">KPIs unificados do ERP João e Maria.</p>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
@@ -152,9 +151,7 @@ export default function DashboardPage() {
             {loading ? (
               <Skeleton className="h-10 w-40" />
             ) : (
-              <div className="text-3xl font-bold">
-                {formatCurrencyBRL(ticketMedio)}
-              </div>
+              <div className="text-3xl font-bold">{formatCurrencyBRL(ticketMedio)}</div>
             )}
             <p className="mt-2 text-sm text-muted-foreground">
               Baseado em pedidos entregues no mês
@@ -167,17 +164,13 @@ export default function DashboardPage() {
                   <Skeleton className="h-6 w-full" />
                 </div>
               ) : lowStock.length === 0 ? (
-                <div className="text-sm text-muted-foreground">
-                  Nenhum item em alerta.
-                </div>
+                <div className="text-sm text-muted-foreground">Nenhum item em alerta.</div>
               ) : (
                 <div className="space-y-2">
                   {lowStock.slice(0, 5).map((b) => (
                     <div key={b.productId} className="flex items-center justify-between text-sm">
                       <span className="truncate">{b.produto}</span>
-                      <span className="text-muted-foreground whitespace-nowrap">
-                        {b.saldo} un.
-                      </span>
+                      <span className="text-muted-foreground whitespace-nowrap">{b.saldo} un.</span>
                     </div>
                   ))}
                 </div>
@@ -202,17 +195,11 @@ function KpiCard({
   return (
     <Card className="kpi-card">
       <CardHeader className="flex flex-row items-center justify-between pb-2">
-        <CardTitle className="text-sm font-medium text-muted-foreground">
-          {title}
-        </CardTitle>
+        <CardTitle className="text-sm font-medium text-muted-foreground">{title}</CardTitle>
         {icon}
       </CardHeader>
       <CardContent>
-        {value === null ? (
-          <Skeleton className="h-8 w-24" />
-        ) : (
-          <div className="text-2xl font-bold">{value}</div>
-        )}
+        {value === null ? <Skeleton className="h-8 w-24" /> : <div className="text-2xl font-bold">{value}</div>}
       </CardContent>
     </Card>
   );

@@ -10,6 +10,10 @@ import { Fragment, useMemo } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 const LABELS: Record<string, string> = {
+  admin: "Admin",
+  gerente: "Gerente",
+  vendedor: "Vendedor",
+  estoquista: "Estoquista",
   dashboard: "Dashboard",
   vendas: "Vendas",
   pedidos: "Pedidos",
@@ -51,7 +55,7 @@ export function ERPBreadcrumbs() {
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
-              <Link to="/dashboard">Vila Bella</Link>
+              <Link to="/dashboard">João e Maria</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
           {crumbs.map((crumb, index) => {

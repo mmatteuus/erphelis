@@ -3,8 +3,8 @@ import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
 const entries = [
-  { id: 'JE-001', date: '2024-12-18', desc: 'Venda VB-2024-001', debit: 'Clientes', credit: 'Receita de Vendas', amount: 209.7 },
-  { id: 'JE-002', date: '2024-12-18', desc: 'CMV VB-2024-001', debit: 'CMV / Insumos', credit: 'Estoque', amount: 45.0 },
+  { id: 'JE-001', date: '2024-12-18', desc: 'Venda JM-2024-001', debit: 'Clientes', credit: 'Receita de Vendas', amount: 209.7 },
+  { id: 'JE-002', date: '2024-12-18', desc: 'CMV JM-2024-001', debit: 'CMV / Insumos', credit: 'Estoque', amount: 45.0 },
 ];
 
 export default function JournalEntries() {

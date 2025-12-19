@@ -4,7 +4,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { CheckCircle2, AlertTriangle } from 'lucide-react';
 
 const items = [
-  { id: 'CN-001', description: 'Pagamento PIX - VB-2024-005', value: 429.8, status: 'Conciliado' },
+  { id: 'CN-001', description: 'Pagamento PIX - JM-2024-005', value: 429.8, status: 'Conciliado' },
   { id: 'CN-002', description: 'Tarifa bancária', value: -9.9, status: 'Pendente' },
 ];
 

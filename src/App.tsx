@@ -11,6 +11,10 @@ import Login from "@/pages/Login";
 import NotFound from "@/pages/NotFound";
 
 const DashboardPage = lazy(() => import("@/pages/erp/DashboardPage"));
+const AdminDashboard = lazy(() => import("@/pages/roles/AdminDashboard"));
+const GerenteDashboard = lazy(() => import("@/pages/roles/GerenteDashboard"));
+const VendedorDashboard = lazy(() => import("@/pages/roles/VendedorDashboard"));
+const EstoquistaDashboard = lazy(() => import("@/pages/roles/EstoquistaDashboard"));
 const PedidosListPage = lazy(() => import("@/pages/erp/vendas/PedidosListPage"));
 const PedidoNovoPage = lazy(() => import("@/pages/erp/vendas/PedidoNovoPage"));
 const ProdutosListPage = lazy(() => import("@/pages/erp/estoque/ProdutosListPage"));
@@ -56,9 +60,42 @@ export default function App() {
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/" element={<Navigate to="/dashboard" replace />} />
+            <Route path="/" element={<Navigate to="/gerente" replace />} />
 
             <Route element={<ERPLayout />}>
+              <Route
+                path="/admin"
+                element={
+                  <Suspense fallback={<RouteFallback />}>
+                    <AdminDashboard />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="/gerente"
+                element={
+                  <Suspense fallback={<RouteFallback />}>
+                    <GerenteDashboard />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="/vendedor"
+                element={
+                  <Suspense fallback={<RouteFallback />}>
+                    <VendedorDashboard />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="/estoquista"
+                element={
+                  <Suspense fallback={<RouteFallback />}>
+                    <EstoquistaDashboard />
+                  </Suspense>
+                }
+              />
+
               <Route
                 path="/dashboard"
                 element={
