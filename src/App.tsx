@@ -9,6 +9,15 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import ForgotPassword from "@/pages/ForgotPassword";
 import Login from "@/pages/Login";
 import NotFound from "@/pages/NotFound";
+import LoginNew from "@/pages/newui/LoginNew";
+import DashboardNew from "@/pages/newui/DashboardNew";
+import ProductsListNew from "@/pages/newui/ProductsListNew";
+import ProductFormNew from "@/pages/newui/ProductFormNew";
+import OrdersListNew from "@/pages/newui/OrdersListNew";
+import OrderDetailsNew from "@/pages/newui/OrderDetailsNew";
+import StockMovementNew from "@/pages/newui/StockMovementNew";
+import ClientsNew from "@/pages/newui/ClientsNew";
+import ReportsNew from "@/pages/newui/ReportsNew";
 
 const DashboardPage = lazy(() => import("@/pages/erp/DashboardPage"));
 const AdminDashboard = lazy(() => import("@/pages/roles/AdminDashboard"));
@@ -59,6 +68,7 @@ export default function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/login" element={<Login />} />
+            <Route path="/novo/login" element={<LoginNew />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/" element={<Navigate to="/gerente" replace />} />
 
@@ -104,6 +114,20 @@ export default function App() {
                   </Suspense>
                 }
               />
+              <Route path="/novo/dashboard" element={<DashboardNew />} />
+
+              <Route path="/admin/products" element={<ProductsListNew />} />
+              <Route path="/admin/products/new" element={<ProductFormNew />} />
+              <Route path="/admin/products/:id/edit" element={<ProductFormNew />} />
+
+              <Route path="/orders" element={<OrdersListNew />} />
+              <Route path="/orders/:id" element={<OrderDetailsNew />} />
+
+              <Route path="/estoque/movimentacoes-nova" element={<StockMovementNew />} />
+
+              <Route path="/clients" element={<ClientsNew />} />
+
+              <Route path="/reports" element={<ReportsNew />} />
 
               <Route
                 path="/vendas/pedidos"
